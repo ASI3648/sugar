@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Памятка ПОТССП | Работай по кружочкам</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            background: linear-gradient(145deg, #f5f7fa 0%, #e6edf4 100%);
+            min-height: 100vh;
+            padding: 1.5rem;
+            color: #1a2c3c;
+            line-height: 1.4;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- Анимация падающих кусочков сахара --- */
+        .sugar-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .sugar-piece {
+            position: absolute;
+            background: rgba(255, 255, 245, 0.9);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border-radius: 2px;
+            opacity: 0.7;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* разнообразные формы: кубики, прямоугольники */
+        @keyframes fall {
+            0% {
+                transform: translateY(-20vh) rotate(0deg);
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Шапка */
+        .header {
+            background: linear-gradient(135deg, #1e3c2c, #2a5a3a);
+            color: white;
+            padding: 1.8rem 2rem;
+            border-radius: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+        .badge {
+            background: #ffb347;
+            color: #1e2f3e;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 0.8rem;
+        }
+
+        /* Основная сетка */
+        .rule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .rule-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(2px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            transition: transform 0.1s;
+            text-align: center;
+        }
+        .rule-card .emoji-big {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .rule-card h3 {
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+        }
+        .rule-card p {
+            margin: 0.8rem 0;
+            color: #2c4e6e;
+        }
+        .action-btn {
+            background: #f0f4f9;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .green-card { border-bottom: 6px solid #2c9a4c; }
+        .yellow-card { border-bottom: 6px solid #e6b422; }
+        .red-card { border-bottom: 6px solid #d9534f; }
+
+        /* Секция "Как работает сфера" */
+        .info-block {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(2px);
+            border-radius: 1.8rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .info-block h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1e3c2c;
+        }
+        .info-block p {
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+        .highlight {
+            background: #fff1d6;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+        .step {
+            background: #f8fafc;
+            padding: 0.8rem 1.2rem;
+            border-radius: 1.2rem;
+            flex: 1;
+            min-width: 180px;
+            border-left: 5px solid;
+        }
+
+        /* Интерактивный тренажёр-демо */
+        .demo {
+            background: #fef9e6;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin-top: 1.5rem;
+        }
+        .demo h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .param-sim {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+        .param-item {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .circle-status {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            transition: 0.1s;
+        }
+        .green-bg { background: #2c9a4c; color: white; box-shadow: 0 0 0 2px #e0f5e8; }
+        .yellow-bg { background: #e6b422; color: white; }
+        .red-bg { background: #d9534f; color: white; }
+        .param-buttons button {
+            background: #eef2f8;
+            border: none;
+            padding: 0.3rem 1rem;
+            margin: 0.3rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .note {
+            font-size: 0.8rem;
+            color: #6f8f9f;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #6f8f9f;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 1.5rem;
+            background: transparent;
+        }
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .param-sim { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Падающие кусочки сахара (фон) -->
+<div class="sugar-bg" id="sugarBg"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>🍬 ПОТССП • Памятка рабочего</h1>
+        <p>Процесс оптимизации технологической службы сахарного производства — 
+        для тех, кто временно работает или ещё не разбирается в сложных процессах.</p>
+        <div class="badge">🎯 Главное правило: следи за кружочком!</div>
+    </div>
+
+    <!-- Три карточки с цветами и действиями -->
+    <div class="rule-grid">
+        <div class="rule-card green-card">
+            <div class="emoji-big">🟢</div>
+            <h3 style="color: #2c9a4c;">Зелёный</h3>
+            <p><strong>Отдыхай</strong> — всё в порядке.<br>Показатели в норме, процесс стабилен.</p>
+            <div class="action-btn">✅ Можно работать спокойно</div>
+        </div>
+        <div class="rule-card yellow-card">
+            <div class="emoji-big">🟡</div>
+            <h3 style="color: #e6b422;">Жёлтый</h3>
+            <p><strong>Скажи начальнику смены</strong> — есть небольшое отклонение.<br>Следи внимательнее.</p>
+            <div class="action-btn">⚠️ Сообщить мастеру</div>
+        </div>
+        <div class="rule-card red-card">
+            <div class="emoji-big">🔴</div>
+            <h3 style="color: #d9534f;">Красный</h3>
+            <p><strong>Предупреди начальника смены</strong> — он доложит технологу.<br>Критическое отклонение!</p>
+            <div class="action-btn">🚨 Срочно зовите технолога</div>
+        </div>
+    </div>
+
+    <!-- Как работает сфера -->
+    <div class="info-block">
+        <h2>🧠 Как работает «Сфера» ПОТССП?</h2>
+        <p><span class="highlight">Не нужно знать сложные зависимости и формулы.</span> Всё просто:</p>
+        <div class="steps">
+            <div class="step" style="border-left-color: #2c9a4c;">
+                <strong>📋 Шаг 1</strong><br>
+                В начале смены вписываются все показатели в систему.
+            </div>
+            <div class="step" style="border-left-color: #e6b422;">
+                <strong>👀 Шаг 2</strong><br>
+                Следите за цветными кружками на экране.
+            </div>
+            <div class="step" style="border-left-color: #d9534f;">
+                <strong>🛠️ Шаг 3</strong><br>
+                При жёлтом или красном – звоните начальнику. Технолог устранит.
+            </div>
+        </div>
+        <p>✅ <strong>Плюс для новичков:</strong> человека без знаний легче научить простым этапам. 
+        Зелёный – хорошо, жёлтый – не очень, красный – плохо. 
+        Не нужно высматривать каждый параметр и сравнивать с нормой – сфера сама подскажет цветом.</p>
+        <p>💡 <strong>Важно:</strong> сфера не даёт знания за секунды, но даёт <strong>среду для работы</strong>, в которой можно ориентироваться даже без опыта. 
+        Это решает проблему текучки персонала – не нужно учить всех с нуля, достаточно показать цвета и действия.</p>
+    </div>
+
+    <!-- Пример для утфеля I продукта -->
+    <div class="info-block">
+        <h2>🍯 Пример: утфель I продукта</h2>
+        <p>Как это выглядит на практике? Вот упрощённые показатели. 
+        Смотрите на кружок – и действуйте по правилу.</p>
+        <div class="demo">
+            <h3>📊 Тренажёр «Следи за кружочком»</h3>
+            <p>Нажмите на кнопки, чтобы изменить параметр – цвет кружка изменится сам.</p>
+            <div class="param-sim" id="simulator">
+                <!-- динамически заполним JS -->
+            </div>
+            <div class="note">
+                💡 Зелёный = норма. Жёлтый = предупреждение начальнику. Красный = срочно вызвать технолога.
+                Это тренировка, в реальности кружки меняются от данных с датчиков.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © ПОТССП — Процесс оптимизации технологической службы сахарного производства.<br>
+        Памятка для временных и новых сотрудников. Работай по кружочкам – будет порядок.
+    </footer>
+</div>
+
+<script>
+    // Генерация падающих кусочков сахара
+    function createSugarPieces() {
+        const container = document.getElementById('sugarBg');
+        if (!container) return;
+        const pieceCount = 55; // количество частиц
+        for (let i = 0; i < pieceCount; i++) {
+            const piece = document.createElement('div');
+            piece.classList.add('sugar-piece');
+            // случайный размер от 4px до 18px (кусочки сахара)
+            const size = Math.floor(Math.random() * 14) + 6;
+            piece.style.width = size + 'px';
+            piece.style.height = size + 'px';
+            // разные формы: кубики, иногда прямоугольники
+            if (Math.random() > 0.7) {
+                piece.style.borderRadius = '2px';
+                piece.style.width = (size * 1.2) + 'px';
+                piece.style.height = (size * 0.8) + 'px';
+            } else {
+                piece.style.borderRadius = '3px';
+            }
+            // цвет: белый, кремовый, полупрозрачный
+            const opacity = 0.5 + Math.random() * 0.4;
+            piece.style.backgroundColor = `rgba(255, 250, 225, ${opacity})`;
+            piece.style.left = Math.random() * 100 + '%';
+            // длительность анимации от 5 до 15 секунд
+            const duration = 6 + Math.random() * 10;
+            piece.style.animationDuration = duration + 's';
+            // задержка
+            const delay = Math.random() * 15;
+            piece.style.animationDelay = delay + 's';
+            container.appendChild(piece);
+        }
+    }
+
+    // Симуляция трёх параметров для наглядности
+    const demoParams = [
+        { name: "Массовая доля СВ", unit: "%", norm: [91,92], warn: [89,94], value: 91.5, step: 0.5 },
+        { name: "Доброкачественность утфеля", unit: "%", norm: [90,100], warn: [88,100], value: 92, step: 0.5 },
+        { name: "Разрежение", unit: "кг/см²", norm: [0.84,0.86], warn: [0.82,0.88], value: 0.85, step: 0.01 }
+    ];
+
+    function getColorByValue(param, val) {
+        if (val >= param.norm[0] && val <= param.norm[1]) return 'green';
+        if (val >= param.warn[0] && val <= param.warn[1]) return 'yellow';
+        return 'red';
+    }
+
+    function getColorText(status) {
+        if (status === 'green') return '🟢 Норма';
+        if (status === 'yellow') return '🟡 Внимание! Скажи начальнику';
+        return '🔴 Критично! Зови технолога';
+    }
+
+    function renderSimulator() {
+        const container = document.getElementById('simulator');
+        if (!container) return;
+        let html = '';
+        demoParams.forEach((param, idx) => {
+            const val = param.value;
+            const colorStatus = getColorByValue(param, val);
+            let bgClass = '';
+            let circleSymbol = '';
+            if (colorStatus === 'green') { bgClass = 'green-bg'; circleSymbol = '🟢'; }
+            else if (colorStatus === 'yellow') { bgClass = 'yellow-bg'; circleSymbol = '🟡'; }
+            else { bgClass = 'red-bg'; circleSymbol = '🔴'; }
+            html += `
+                <div class="param-item">
+                    <div><strong>${param.name}</strong></div>
+                    <div style="font-size:1.4rem; font-weight:bold;">${val.toFixed(param.step===0.01?3:1)} ${param.unit}</div>
+                    <div class="circle-status ${bgClass}">${circleSymbol}</div>
+                    <div style="font-size:0.8rem; font-weight:600;">${getColorText(colorStatus)}</div>
+                    <div class="param-buttons">
+                        <button data-idx="${idx}" data-dir="down">− ${param.step}</button>
+                        <button data-idx="${idx}" data-dir="up">+ ${param.step}</button>
+                        <button data-idx="${idx}" data-dir="norm">◉ Норма</button>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+
+        document.querySelectorAll('.param-buttons button').forEach(btn => {
+            btn.removeEventListener('click', handleDemoClick);
+            btn.addEventListener('click', handleDemoClick);
+        });
+    }
+
+    function handleDemoClick(e) {
+        const idx = parseInt(e.currentTarget.getAttribute('data-idx'));
+        const dir = e.currentTarget.getAttribute('data-dir');
+        const param = demoParams[idx];
+        let newVal = param.value;
+        if (dir === 'up') {
+            newVal = param.value + param.step;
+        } else if (dir === 'down') {
+            newVal = param.value - param.step;
+        } else if (dir === 'norm') {
+            newVal = (param.norm[0] + param.norm[1]) / 2;
+            if (param.name === "Разрежение") newVal = 0.85;
+            else if (param.name === "Доброкачественность утфеля") newVal = 91;
+            else newVal = 91.5;
+        }
+        if (param.name === "Разрежение") {
+            newVal = Math.min(0.95, Math.max(0.75, newVal));
+            newVal = parseFloat(newVal.toFixed(3));
+        } else {
+            newVal = Math.min(100, Math.max(50, newVal));
+            newVal = parseFloat(newVal.toFixed(1));
+        }
+        param.value = newVal;
+        renderSimulator();
+    }
+
+    // запускаем падающий сахар и рендер
+    createSugarPieces();
+    renderSimulator();
+</script>
+</body>
+</html>
